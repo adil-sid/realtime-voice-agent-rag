@@ -3,3 +3,4 @@ python-dotenv
 sentence-transformers
 pypdf
 streamlit
+pymupdf

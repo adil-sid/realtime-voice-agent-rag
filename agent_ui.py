@@ -2,6 +2,7 @@ import streamlit as st
 import subprocess
 import os
 import signal
+import sys
 import rag_backend
 
 # Page Config
@@ -48,18 +49,26 @@ with col1:
     # START BUTTON
     if st.button("▶️ START VOICE AGENT", type="primary", use_container_width=True):
         if st.session_state.bot_process is None:
-            # Launches 'voice_bot.py' in a separate terminal window
             try:
-                # Windows command to open new console
+                # 1. Get the path to the current Python (inside voiceenv)
+                python_executable = sys.executable 
+                
+                # 2. Command: Open CMD, Keep it open (/k), and run the script
+                # This ensures you can see any errors if it crashes.
+                cmd_command = [
+                    "cmd.exe", 
+                    "/k", 
+                    python_executable, 
+                    "voice_bot.py"
+                ]
+                
                 st.session_state.bot_process = subprocess.Popen(
-                    ["python", "voice_bot.py"], 
+                    cmd_command, 
                     creationflags=subprocess.CREATE_NEW_CONSOLE
                 )
                 st.success("Agent is starting... Check the new terminal window!")
             except Exception as e:
                 st.error(f"Failed to start: {e}")
-        else:
-            st.warning("Agent is already running!")
 
 with col2:
     # STOP BUTTON
