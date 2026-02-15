@@ -6,9 +6,7 @@ __pycache__/
 *.py[cod]
 
 # Ignore the virtual environment (it's huge and not needed)
-venv/
 voiceenv/
-voicenv/
 
 # Ignore VS Code settings
 .vscode/
